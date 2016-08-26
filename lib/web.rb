@@ -1,5 +1,11 @@
 
 gem 'semantic-ui-sass', '~> 2.2'
+
+gem_group :development do
+  gem 'guard-livereload', '~> 2.5'
+  gem 'rack-livereload', '~> 0.3.16'
+end
+
 run_bundle
 
 # Semantic UI for Sass
@@ -40,15 +46,7 @@ git commit: %Q< -m 'add root page' >
 
 
 # Guard
-gem_group :development do
-  gem 'guard-livereload'
-  gem 'rack-livereload'
-end
-run_bundle
 run "guard init livereload"
 environment nil , env: 'development' do
   %q{config.middleware.insert_after ActionDispatch::Static, Rack::LiveReload}
 end
-
-git add: '.'
-git commit: %Q< -m 'add livereload' >

@@ -1,4 +1,4 @@
-
+# gems
 gem 'semantic-ui-sass', '~> 2.2'
 gem 'slim-rails', '~> 3.1'
 
@@ -10,6 +10,7 @@ gem_group :development do
 end
 
 run_bundle
+run "spring binstub --remove --all"
 
 environment 'config.assets.quiet = true', env: 'development'
 
@@ -23,17 +24,6 @@ insert_into_file 'app/assets/javascripts/application.js', :after => "jquery\n" d
   "//= require semantic-ui\n"
 end
 
-
-
-# Quiet Assets
-gem_group :development do
-  gem 'quiet_assets'
-end
-run_bundle
-git add: '.'
-git commit: %Q< -m 'add quiet_assets' >
-
-
 # welcome
 application "config.generators.assets = false"
 application "config.generators.helper = false"
@@ -46,8 +36,6 @@ namespace :admin do
 end
 ")
 
-git add: '.'
-git commit: %Q< -m 'add root page' >
 
 
 # Guard
@@ -55,3 +43,7 @@ run "guard init livereload"
 environment nil , env: 'development' do
   %q{config.middleware.insert_after ActionDispatch::Static, Rack::LiveReload}
 end
+
+run "bundle exec spring binstub  --all"
+git add: '.'
+git commit: %Q< -m 'oh-my-rails: web' >

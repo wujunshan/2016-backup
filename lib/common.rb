@@ -1,11 +1,4 @@
-# support methods: indent
-require 'active_support/all'
-
-def source_paths
-  [File.expand_path('../../templates', __FILE__)]
-end
-
-### Gems
+# Gems
 gem 'seedbank', '~> 0.4.0'
 gem 'rails-i18n', '~> 5.0'
 gem 'aasm', '~> 4.11'
@@ -34,9 +27,9 @@ gem_group :test do
   gem 'shoulda-matchers', '~> 3.1'
   gem 'faker', '~> 1.6'
 end
-run "spring binstub --remove --all"
 
 run_bundle
+run "spring binstub --remove --all"
 
 remove_file 'README.md'
 copy_file 'README.md'

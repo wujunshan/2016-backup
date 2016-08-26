@@ -15,11 +15,11 @@ run "spring binstub --remove --all"
 environment 'config.assets.quiet = true', env: 'development'
 
 # Semantic UI for Sass
-copy_file 'app/assets/stylesheets/application.css',
-  'app/assets/stylesheets/application.scss' do |content|
-    content << '@import "semantic-ui";'
-end
-remove_file 'app/assets/stylesheets/application.css'
+# copy_file 'app/assets/stylesheets/application.css',
+#   'app/assets/stylesheets/application.scss' do |content|
+#     content << '@import "semantic-ui";'
+# end
+# remove_file 'app/assets/stylesheets/application.css'
 insert_into_file 'app/assets/javascripts/application.js', :after => "jquery\n" do
   "//= require semantic-ui\n"
 end

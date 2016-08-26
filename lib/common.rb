@@ -8,6 +8,10 @@ gem 'sinatra', '~> 2.0.0.beta2'
 gem_group :development do
   gem 'annotate', '~> 2.7'
   gem 'foreman', '~> 0.82.0'
+
+  gem 'guard-rspec', '~> 4.7'
+  gem 'spring-commands-rspec', '~> 1.0'
+  gem 'fuubar', '~> 2.2'
 end
 
 gem_group :development, :test do
@@ -92,6 +96,12 @@ inject_into_class 'config/application.rb', 'Application' do
     end
   EOS
 end
+
+# rspec - guard
+run "guard init rspec"
+run 'spring binstub rspec'
+append_to_file '.rspec', '--format Fuubar'
+gsub_file 'Guardfile', /cmd: "bundle exec rspec"/, 'cmd: "bin/rspec"'
 
 git add: '.'
 git commit: %Q< -m 'oh-my-rails: common' >

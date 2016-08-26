@@ -1,12 +1,17 @@
 
 gem 'semantic-ui-sass', '~> 2.2'
+gem 'slim-rails', '~> 3.1'
 
 gem_group :development do
   gem 'guard-livereload', '~> 2.5'
   gem 'rack-livereload', '~> 0.3.16'
+
+  gem 'meta_request', '~> 0.4.0'
 end
 
 run_bundle
+
+environment 'config.assets.quiet = true', env: 'development'
 
 # Semantic UI for Sass
 copy_file 'app/assets/stylesheets/application.css',

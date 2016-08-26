@@ -12,6 +12,8 @@ gem_group :development do
   gem 'guard-rspec', '~> 4.7'
   gem 'spring-commands-rspec', '~> 1.0'
   gem 'fuubar', '~> 2.2'
+
+  gem 'pry-rails', '~> 0.3.4'
 end
 
 gem_group :development, :test do

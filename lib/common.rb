@@ -1,3 +1,11 @@
+# support methods: indent
+require 'active_support/all'
+
+def source_paths
+  [File.expand_path('../../templates', __FILE__)]
+end
+
+### Gems
 gem 'seedbank', '~> 0.4.0'
 gem 'rails-i18n', '~> 5.0'
 gem 'aasm', '~> 4.11'
@@ -5,24 +13,20 @@ gem 'paranoia', '~> 2.2.0.pre'
 gem 'sidekiq', '~> 4.1'
 gem 'sinatra', '~> 2.0.0.beta2'
 
+gem_group :development, :test do
+  gem 'dotenv-rails', '~> 2.1'
+  gem 'rspec-rails', '~> 3.5'
+  gem 'factory_girl_rails', '~> 4.7'
+end
+
 gem_group :development do
   gem 'annotate', '~> 2.7'
   gem 'foreman', '~> 0.82.0'
-
   gem 'guard-rspec', '~> 4.7'
   gem 'spring-commands-rspec', '~> 1.0'
   gem 'fuubar', '~> 2.2'
-
   gem 'pry-rails', '~> 0.3.4'
-
   gem 'rails-erd', '~> 1.5'
-end
-
-gem_group :development, :test do
-  gem 'dotenv-rails', '~> 2.1'
-
-  gem 'rspec-rails', '~> 3.5'
-  gem 'factory_girl_rails', '~> 4.7'
 end
 
 gem_group :test do
@@ -30,17 +34,20 @@ gem_group :test do
   gem 'shoulda-matchers', '~> 3.1'
   gem 'faker', '~> 1.6'
 end
+run "spring binstub --remove --all"
 
 run_bundle
+
+remove_file 'README.md'
+copy_file 'README.md'
+copy_file 'CHANGELOG.md'
+copy_file 'Procfile'
 
 # seedbank
 create_file 'db/seeds/development/.keep'
 
 # annotate
 generate "annotate:install"
-
-# foreman
-create_file 'Procfile', "web: bundle exec rails s\n"
 
 # rails-i18n
 application "config.i18n.default_locale = 'zh-CN'"
@@ -50,12 +57,8 @@ remove_file 'config/locales/en.yml'
 
 # dotenv-rails
 append_to_file '.gitignore', ".env\n"
-create_file '.env' do
-  <<-EOS.strip_heredoc
-    export SECRET_KEY_BASE=example
-  EOS
-end
-run "cp .env{,.example}"
+copy_file 'environment', '.env'
+copy_file 'environment', '.env.example'
 
 # sidekiq
 prepend_to_file 'config/routes.rb', "require 'sidekiq/web'\n"
@@ -64,15 +67,9 @@ route("mount Sidekiq::Web => '/sidekiq'")
 
 # rspec(debug)
 generate 'rspec:install'
-create_file 'spec/support/factory_girl.rb' do
-  <<-EOS.strip_heredoc.indent(2)
-    RSpec.configure do |config|
-      # See http://www.rubydoc.info/gems/factory_girl/file/GETTING_STARTED.md
-      config.include FactoryGirl::Syntax::Methods
-    end
-  EOS
-end
+copy_file 'factory_girl.rb', 'spec/support/factory_girl.rb'
 uncomment_lines 'spec/rails_helper.rb', /support.*require/
+
 insert_into_file 'spec/rails_helper.rb', :after => "RSpec.configure do |config|\n" do
   <<-EOS.strip_heredoc.indent(2)
     Shoulda::Matchers.configure do |config|
@@ -107,5 +104,6 @@ run 'spring binstub rspec'
 append_to_file '.rspec', '--format Fuubar'
 gsub_file 'Guardfile', /cmd: "bundle exec rspec"/, 'cmd: "bin/rspec"'
 
+run "bundle exec spring binstub  --all"
 git add: '.'
 git commit: %Q< -m 'oh-my-rails: common' >

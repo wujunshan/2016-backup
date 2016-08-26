@@ -27,6 +27,9 @@ create_file 'Procfile', "web: bundle exec rails s\n"
 
 # rails-i18n
 application "config.i18n.default_locale = 'zh-CN'"
+copy_file 'zh-CN.yml', 'config/locales/zh-CN.yml'
+copy_file 'active_record.yml', 'config/locales/active_record.yml'
+remove_file 'config/locales/en.yml'
 
 # dotenv-rails
 append_to_file '.gitignore', ".env\n"

@@ -1,6 +1,8 @@
-# Semantic UI for Sass
-gem 'semantic-ui-sass'
+
+gem 'semantic-ui-sass', '~> 2.2'
 run_bundle
+
+# Semantic UI for Sass
 copy_file 'app/assets/stylesheets/application.css',
   'app/assets/stylesheets/application.scss' do |content|
     content << '@import "semantic-ui";'
@@ -9,8 +11,7 @@ remove_file 'app/assets/stylesheets/application.css'
 insert_into_file 'app/assets/javascripts/application.js', :after => "jquery\n" do
   "//= require semantic-ui\n"
 end
-git add: '.'
-git commit: %Q< -m 'add Semantic UI' >
+
 
 
 # Quiet Assets

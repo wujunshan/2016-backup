@@ -14,6 +14,8 @@ gem_group :development do
   gem 'fuubar', '~> 2.2'
 
   gem 'pry-rails', '~> 0.3.4'
+
+  gem 'rails-erd', '~> 1.5'
 end
 
 gem_group :development, :test do

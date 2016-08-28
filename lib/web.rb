@@ -10,7 +10,7 @@ gem_group :development do
 end
 
 run_bundle
-run "spring binstub --remove --all"
+run "bundle exec spring binstub --remove --all"
 
 environment 'config.assets.quiet = true', env: 'development'
 
@@ -39,7 +39,7 @@ end
 
 
 # Guard
-run "guard init livereload"
+run "bundle exec guard init livereload"
 environment nil , env: 'development' do
   %q{config.middleware.insert_after ActionDispatch::Static, Rack::LiveReload}
 end

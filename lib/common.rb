@@ -29,7 +29,7 @@ gem_group :test do
 end
 
 run_bundle
-run "spring binstub --remove --all"
+run "bundle exec spring binstub --remove --all"
 
 remove_file 'README.md'
 copy_file 'README.md'
@@ -92,8 +92,8 @@ inject_into_class 'config/application.rb', 'Application' do
 end
 
 # rspec - guard
-run "guard init rspec"
-run 'spring binstub rspec'
+run "bundle exec guard init rspec"
+run 'bundle exec spring binstub rspec'
 append_to_file '.rspec', '--format Fuubar'
 gsub_file 'Guardfile', /cmd: "bundle exec rspec"/, 'cmd: "bin/rspec"'
 

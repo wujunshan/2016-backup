@@ -5,6 +5,7 @@ gem 'aasm', '~> 4.11'
 gem 'paranoia', '~> 2.2.0.pre'
 gem 'sidekiq', '~> 4.1'
 gem 'sinatra', '~> 2.0.0.beta2'
+gem 'whenever', '~> 0.9.7'
 
 gem_group :development, :test do
   gem 'dotenv-rails', '~> 2.1'
@@ -58,6 +59,8 @@ prepend_to_file 'config/routes.rb', "require 'sidekiq/web'\n"
 route("mount Sidekiq::Web => '/sidekiq'")
 environment "config.active_job.queue_adapter = :sidekiq", env: 'development'
 
+# whenever
+run "wheneverize ."
 
 # rspec(debug)
 generate 'rspec:install'

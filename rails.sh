@@ -10,21 +10,17 @@ export RUBY_CONFIGURE_OPTS="--disable-install-doc"
 export LC_ALL="en_US.UTF-8"
 export DEBIAN_FRONTEND=noninteractive
 
+# Basic
 cp /etc/apt/sources.list{,.default}
 sed -i 's/archive.ubuntu.com/cn.archive.ubuntu.com/g' /etc/apt/sources.list
-
 apt-get update
-echo -e "\e[31;43;1m System update success \e[0m "
-
-# Basic
-apt-get -yq install language-pack-en language-pack-zh-hans vim htop screen dstat rsync git-core
+apt-get -yq install language-pack-en language-pack-zh-hans git-core
+echo 'export LC_ALL=en_US.UTF-8' >> /etc/profile
+echo 'HISTTIMEFORMAT="[%Y-%m-%d %T] "' >> /etc/profile
 echo -e "\e[31;43;1m Basic install success \e[0m "
 
-# Compiling
-apt-get -yq install autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm3 libgdbm-dev
-echo -e "\e[31;43;1m Compiling install success \e[0m "
-
 # Rbenv
+apt-get -yq install autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm3 libgdbm-dev
 git clone https://github.com/sstephenson/rbenv.git /usr/local/rbenv
 git clone https://github.com/sstephenson/ruby-build.git /usr/local/rbenv/plugins/ruby-build
 echo '# rbenv setup' >> /etc/profile.d/rbenv.sh
@@ -67,11 +63,6 @@ echo -e "\e[31;43;1m Memcached install success \e[0m "
 apt-get -yq install redis-server
 echo -e "\e[31;43;1m Redis install success \e[0m "
 
-# System Config
-localectl set-locale LC_ALL=en_US.UTF-8
-echo 'export LC_ALL=en_US.UTF-8' >> /etc/profile
-echo 'HISTTIMEFORMAT="[%Y-%m-%d %T] "' >> /etc/profile
-echo -e "\e[31;43;1m system config success \e[0m "
 
 # Fix Permissions
 chgrp -R staff /usr/local/rbenv
@@ -81,6 +72,5 @@ if [ -d /home/vagrant ]; then
   su - vagrant -c "bundle config mirror.https://rubygems.org https://gems.ruby-china.org"
 fi
 echo -e "\e[31;43;1m Fix Permissions success \e[0m "
-
 
 echo -e "\e[31;43;1m All Done. Have a nice day!   \e[0m "

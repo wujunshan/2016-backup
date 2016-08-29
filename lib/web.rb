@@ -10,6 +10,7 @@ gem_group :development do
 end
 
 run_bundle
+run "bundle exec spring stop"
 run "bundle exec spring binstub --remove --all"
 
 environment 'config.assets.quiet = true', env: 'development'

@@ -30,6 +30,7 @@ gem_group :test do
 end
 
 run_bundle
+run "bundle exec spring stop"
 run "bundle exec spring binstub --remove --all"
 
 remove_file 'README.md'

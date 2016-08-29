@@ -1,6 +1,7 @@
 gem 'active_model_serializers', '~> 0.10.2'
 
 run_bundle
+run "bundle exec spring stop"
 run "spring binstub --remove --all"
 
 # ActiveModelSerializers

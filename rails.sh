@@ -67,23 +67,6 @@ echo -e "\e[31;43;1m Memcached install success \e[0m "
 apt-get -y install redis-server
 echo -e "\e[31;43;1m Redis install success \e[0m "
 
-
-# Add Deploy User
-deploy_user=deploy
-ssh_home=/home/${deploy_user}/.ssh
-useradd -m -G staff -s /bin/bash ${deploy_user}
-echo "${deploy_user}:QingShouBang"| chpasswd
-passwd -l ${deploy_user}
-mkdir ${ssh_home}
-echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDiAP0QTzqGB4Mqhq+nyx00grcmLNqDV8ttZnjd/D3yC1Km9speqrWejSOQlpOHfCIARUIiAKpfwjYlFHT1nZ9+5czRKqNljaT5OKlF+RYyrrlxi9NcmjCzf0h5soAXcCpe1xUSDFaZjSvcTTJFXZyyo9GWRaexAan9jlpH4iZd7ty8rsQX/vHFwujSnyrLbGyOiG7eldVZt7+HoCdJ12SsC2boTFlwy1hYlk0t25Kx3dU9BCupuVQ/nbavfzZpbSx0vqCMqekqj1/r/zlVLRDrCzRau3bKInmsHT3JlMRjmLXC+HvxB2+1LKMINcbCKaWJ/DYD0W81EjIuPM6thTUT sikuan.gu@gmail.com" >> ${ssh_home}/authorized_keys
-echo "${deploy_user} ALL=NOPASSWD:ALL" >> /etc/sudoers
-chown -R ${deploy_user}:${deploy_user} ${ssh_home}
-chmod 700 ${ssh_home}
-chmod 600 ${ssh_home}/authorized_keys
-su - ${deploy_user} -c "bundle config mirror.https://rubygems.org https://gems.ruby-china.org"
-echo -e "\e[31;43;1m deploy user create success \e[0m "
-
-
 # System Config
 localectl set-locale LC_ALL=en_US.UTF-8
 echo 'export LC_ALL=en_US.UTF-8' >> /etc/profile

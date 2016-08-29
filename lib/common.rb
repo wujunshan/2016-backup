@@ -58,7 +58,7 @@ copy_file 'environment', '.env.example'
 # sidekiq
 prepend_to_file 'config/routes.rb', "require 'sidekiq/web'\n"
 route("mount Sidekiq::Web => '/sidekiq'")
-environment "config.active_job.queue_adapter = :sidekiq", env: 'development'
+environment "config.active_job.queue_adapter = :sidekiq"
 
 # whenever
 run "wheneverize ."

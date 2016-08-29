@@ -2,6 +2,11 @@
 
 # https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box
 
+# initialize
+RUBY_VERSION=2.3.1
+GEM_SOURCES=https://gems.ruby-china.org/
+export RUBY_BUILD_MIRROR_URL=https://ruby.taobao.org/mirrors/ruby/ruby-$RUBY_VERSION.tar.bz2#
+export RUBY_CONFIGURE_OPTS="--disable-install-doc"
 export LC_ALL="en_US.UTF-8"
 export DEBIAN_FRONTEND=noninteractive
 
@@ -30,23 +35,17 @@ source /etc/profile.d/rbenv.sh
 echo -e "\e[31;43;1m Rbenv install success \e[0m "
 
 # Ruby
-ruby_version=2.3.1
-export RUBY_BUILD_MIRROR_URL=https://ruby.taobao.org/mirrors/ruby/ruby-${ruby_version}.tar.bz2#
-export RUBY_CONFIGURE_OPTS="--disable-install-doc"
-rbenv install -v ${ruby_version}
-rbenv global ${ruby_version}
-rbenv shell ${ruby_version}
+rbenv install $RUBY_VERSION
+rbenv global $RUBY_VERSION
+rbenv shell $RUBY_VERSION
 rbenv rehash
 echo -e "\e[31;43;1m Ruby install success \e[0m "
 
 # Rails
-gem sources --add https://gems.ruby-china.org/ --remove https://rubygems.org/
-gem install rails -v 5.0.0.rc2 -V -N
+gem sources --add $GEM_SOURCES --remove https://rubygems.org/
+echo 'gem: --no-document' >> ~/.gemrc
+gem install rails
 echo -e "\e[31;43;1m $(rails -v) install success \e[0m "
-
-# NodeJS
-apt-get -y install nodejs nodejs-legacy npm
-echo -e "\e[31;43;1m NodeJS install success \e[0m "
 
 # MySQL
 apt-get -y install mysql-server mysql-client libmysqlclient-dev

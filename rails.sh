@@ -17,11 +17,11 @@ apt-get update
 echo -e "\e[31;43;1m System update success \e[0m "
 
 # Basic
-apt-get -y install language-pack-en language-pack-zh-hans vim htop screen dstat rsync git-core
+apt-get -yq install language-pack-en language-pack-zh-hans vim htop screen dstat rsync git-core
 echo -e "\e[31;43;1m Basic install success \e[0m "
 
 # Compiling
-apt-get -y install autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm3 libgdbm-dev
+apt-get -yq install autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm3 libgdbm-dev
 echo -e "\e[31;43;1m Compiling install success \e[0m "
 
 # Rbenv
@@ -48,23 +48,23 @@ gem install rails
 echo -e "\e[31;43;1m $(rails -v) install success \e[0m "
 
 # MySQL
-apt-get -y install mysql-server mysql-client libmysqlclient-dev
+apt-get -yq install mysql-server mysql-client libmysqlclient-dev
 echo -e "\e[31;43;1m MySQL install success \e[0m "
 
 # PostgreSQL
-apt-get -y install postgresql libpq-dev
+apt-get -yq install postgresql libpq-dev
 echo -e "\e[31;43;1m PostgreSQL install success \e[0m "
 
 # Nginx
-apt-get -y install nginx
+apt-get -yq install nginx
 echo -e "\e[31;43;1m Nginx install success \e[0m "
 
 # Memcached
-apt-get -y install memcached
+apt-get -yq install memcached
 echo -e "\e[31;43;1m Memcached install success \e[0m "
 
 # Redis
-apt-get -y install redis-server
+apt-get -yq install redis-server
 echo -e "\e[31;43;1m Redis install success \e[0m "
 
 # System Config

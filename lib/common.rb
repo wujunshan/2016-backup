@@ -6,6 +6,7 @@ gem 'paranoia', '~> 2.2.0.pre'
 gem 'sidekiq', '~> 4.1'
 gem 'sinatra', '~> 2.0.0.beta2'
 gem 'whenever', '~> 0.9.7'
+gem 'friendly_id', '~> 5.1'
 
 gem_group :development, :test do
   gem 'dotenv-rails', '~> 2.1'

@@ -34,16 +34,19 @@ run_bundle
 run "bundle exec spring stop"
 run "bundle exec spring binstub --remove --all"
 
+# App
 remove_file 'README.md'
 copy_file 'README.md'
 copy_file 'CHANGELOG.md'
-copy_file 'Procfile'
 
 # I18n
 remove_file 'config/locales/en.yml'
 copy_file 'locale.rb', 'config/initializers/locale.rb'
 directory 'locales/defaults', 'config/locales/defaults'
 directory 'locales/models', 'config/locales/models'
+
+# annotate
+generate "annotate:install"
 
 # seedbank
 create_file 'db/seeds/development/.keep'
@@ -60,34 +63,17 @@ run "wheneverize ."
 # FriendlyId
 generate "friendly_id"
 
-# annotate
-generate "annotate:install"
-
 # dotenv-rails
 append_to_file '.gitignore', ".env\n"
 copy_file 'environment', '.env'
 copy_file 'environment', '.env.example'
 
+# foreman
+copy_file 'Procfile'
 
-
-
-
-# rspec(debug)
+# rspec
 generate 'rspec:install'
-copy_file 'factory_girl.rb', 'spec/support/factory_girl.rb'
 uncomment_lines 'spec/rails_helper.rb', /support.*require/
-
-insert_into_file 'spec/rails_helper.rb', :after => "RSpec.configure do |config|\n" do
-  <<-EOS.strip_heredoc.indent(2)
-    Shoulda::Matchers.configure do |config|
-      config.integrate do |with|
-        # Choose a test framework:
-        with.test_framework :rspec
-        with.library :rails
-      end
-    end
-  EOS
-end
 
 inject_into_class 'config/application.rb', 'Application' do
   <<-EOS.strip_heredoc.indent(4)
@@ -105,11 +91,20 @@ inject_into_class 'config/application.rb', 'Application' do
   EOS
 end
 
+# factory_girl
+copy_file 'factory_girl.rb', 'spec/support/factory_girl.rb'
+
 # rspec - guard
 run "bundle exec guard init rspec"
 run 'bundle exec spring binstub rspec'
+gsub_file 'Guardfile', /cmd: "bundle exec rspec"/, 'cmd: "spring rspec"'
+
+# Fuubar
 append_to_file '.rspec', '--format Fuubar'
-gsub_file 'Guardfile', /cmd: "bundle exec rspec"/, 'cmd: "bin/rspec"'
+
+# shoulda-matchers
+copy_file 'shoulda_matchers.rb', 'spec/support/shoulda_matchers.rb'
+
 
 run "bundle exec spring binstub  --all"
 git add: '.'

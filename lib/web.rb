@@ -7,6 +7,8 @@ gem_group :development do
   gem 'rack-livereload', '~> 0.3.16'
 
   gem 'meta_request', '~> 0.4.0'
+
+  gem 'better_errors', '~> 2.1'
 end
 
 run_bundle

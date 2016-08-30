@@ -6,13 +6,13 @@ run "bundle exec spring stop"
 run "spring binstub --remove --all"
 
 # ActiveModelSerializers
-create_file 'config/initializers/json_api.rb' do
+application 'ActiveModel::Serializer.config.adapter = :json_api'
+prepend_to_file 'config/initializers/mime_types.rb' do
   <<-EOS.strip_heredoc
-    ActiveModel::Serializer.config.adapter = :json_api
-    Mime::Type.register "application/json", :json, %w( text/x-json application/jsonrequest application/vnd.api+json )
+    # http://jsonapi.org.cn/
+    Mime::Type.register "application/json", :json, %w( application/vnd.api+json text/x-json application/jsonrequest  )
   EOS
 end
-
 
 # Rack CORS Middleware
 application do

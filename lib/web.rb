@@ -18,6 +18,9 @@ run "bundle exec spring binstub --remove --all"
 
 environment 'config.assets.quiet = true', env: 'development'
 
+# I18n
+directory 'locales/views', 'config/locales/views'
+
 # Semantic UI for Sass
 # copy_file 'app/assets/stylesheets/application.css',
 #   'app/assets/stylesheets/application.scss' do |content|

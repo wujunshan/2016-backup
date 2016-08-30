@@ -39,17 +39,17 @@ copy_file 'README.md'
 copy_file 'CHANGELOG.md'
 copy_file 'Procfile'
 
+# I18n
+remove_file 'config/locales/en.yml'
+copy_file 'locale.rb', 'config/initializers/locale.rb'
+directory 'locales/defaults', 'config/locales/defaults'
+directory 'locales/models', 'config/locales/models'
+
 # seedbank
 create_file 'db/seeds/development/.keep'
 
 # annotate
 generate "annotate:install"
-
-# rails-i18n
-application "config.i18n.default_locale = 'zh-CN'"
-copy_file 'zh-CN.yml', 'config/locales/zh-CN.yml'
-copy_file 'active_record.yml', 'config/locales/active_record.yml'
-remove_file 'config/locales/en.yml'
 
 # dotenv-rails
 append_to_file '.gitignore', ".env\n"

@@ -1,0 +1,7 @@
+zh-CN:
+  activerecord:
+    models:
+      user: '用户'
+    attributes:
+      user:
+        name: '姓名'

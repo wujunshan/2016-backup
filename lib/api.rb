@@ -7,7 +7,7 @@ run "spring binstub --remove --all"
 
 # ActiveModelSerializers
 application 'ActiveModel::Serializer.config.adapter = :json_api'
-prepend_to_file 'config/initializers/mime_types.rb' do
+append_to_file 'config/initializers/mime_types.rb' do
   <<-EOS.strip_heredoc
     # http://jsonapi.org.cn/
     Mime::Type.register "application/json", :json, %w( application/vnd.api+json text/x-json application/jsonrequest  )

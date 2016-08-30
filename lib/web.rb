@@ -1,6 +1,7 @@
 # gems
 gem 'semantic-ui-sass', '~> 2.2'
 gem 'slim-rails', '~> 3.1'
+gem 'local_time', '~> 1.0'
 
 gem_group :development do
   gem 'guard-livereload', '~> 2.5'

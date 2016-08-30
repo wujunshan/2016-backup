@@ -48,6 +48,18 @@ directory 'locales/models', 'config/locales/models'
 # seedbank
 create_file 'db/seeds/development/.keep'
 
+# sidekiq
+# https://junnan.org/2015/08/sidekiq.html
+prepend_to_file 'config/routes.rb', "require 'sidekiq/web'\n"
+route("mount Sidekiq::Web => '/sidekiq'")
+application "config.active_job.queue_adapter = :sidekiq"
+
+# whenever
+run "wheneverize ."
+
+# FriendlyId
+generate "friendly_id"
+
 # annotate
 generate "annotate:install"
 
@@ -56,13 +68,9 @@ append_to_file '.gitignore', ".env\n"
 copy_file 'environment', '.env'
 copy_file 'environment', '.env.example'
 
-# sidekiq
-prepend_to_file 'config/routes.rb', "require 'sidekiq/web'\n"
-route("mount Sidekiq::Web => '/sidekiq'")
-application "config.active_job.queue_adapter = :sidekiq"
 
-# whenever
-run "wheneverize ."
+
+
 
 # rspec(debug)
 generate 'rspec:install'

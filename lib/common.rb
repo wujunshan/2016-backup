@@ -12,6 +12,7 @@ gem_group :development, :test do
   gem 'dotenv-rails', '~> 2.1'
   gem 'rspec-rails', '~> 3.5'
   gem 'factory_girl_rails', '~> 4.7'
+  gem 'timecop', '~> 0.8.1'
 end
 
 gem_group :development do

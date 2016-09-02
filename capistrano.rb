@@ -52,4 +52,4 @@ end
 
 uncomment_lines 'config/deploy.rb', /ask\s:branch/
 uncomment_lines 'config/deploy.rb', /set\s:deploy_to/
-uncomment_lines 'config/deploy.rb', /set\s:linked_dirs/
+uncomment_lines 'config/deploy.rb', /append\s:linked_dirs/

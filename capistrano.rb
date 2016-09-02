@@ -14,6 +14,7 @@ uncomment_lines 'Capfile', /require.*migrations/
 uncomment_lines 'Capfile', /require.*rbenv/
 insert_into_file 'config/deploy.rb', :after=> /set\s:keep_releases.*\s/ do
   <<-EOS.strip_heredoc
+
     # https://github.com/capistrano/bundler
     set :bundle_jobs, 4 # default: nil, only available for Bundler >= 1.4
     # https://github.com/capistrano/rbenv
@@ -24,8 +25,7 @@ insert_into_file 'config/deploy.rb', :after=> /set\s:keep_releases.*\s/ do
     set :rbenv_roles, :all # default value
   EOS
 end
-git add: "."
-git commit: %Q{ -m 'capistrano-rbenv' }
+
 
 # capistrano3-puma
 insert_into_file 'Capfile', :after => /require.*passenger.*\s/ do
@@ -34,8 +34,15 @@ insert_into_file 'Capfile', :after => /require.*passenger.*\s/ do
     require 'capistrano/puma/nginx'
   EOS
 end
-git add: "."
-git commit: %Q{ -m 'capistrano3-puma' }
+
+insert_into_file 'config/deploy.rb', :after=> /set\s:keep_releases.*\s/ do
+  <<-EOS.strip_heredoc
+    # https://github.com/seuros/capistrano-puma
+    set :nginx_sites_available_path, "/etc/nginx/sites-available"
+    set :nginx_sites_enabled_path, "/etc/nginx/sites-enabled"
+    set :nginx_server_name, "api.bianfu360.com"
+  EOS
+end
 
 
 # App
@@ -46,6 +53,3 @@ end
 uncomment_lines 'config/deploy.rb', /ask\s:branch/
 uncomment_lines 'config/deploy.rb', /set\s:deploy_to/
 uncomment_lines 'config/deploy.rb', /set\s:linked_dirs/
-
-git add: "."
-git commit: %Q{ -m 'capistrano3-app' }

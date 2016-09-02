@@ -18,6 +18,9 @@ run "bundle exec spring binstub --remove --all"
 
 environment 'config.assets.quiet = true', env: 'development'
 
+# capistrano-rails
+uncomment_lines 'Capfile', /require.*assets/
+
 # I18n
 directory 'locales/views', 'config/locales/views'
 

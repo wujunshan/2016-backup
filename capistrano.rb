@@ -5,16 +5,10 @@ gem_group :development do
 end
 run_bundle
 run "cap install"
-git add: "."
-git commit: %Q{ -m 'capistrano' }
-
 
 # capistrano-rails
 uncomment_lines 'Capfile', /require.*bundle/
-uncomment_lines 'Capfile', /require.*assets/
 uncomment_lines 'Capfile', /require.*migrations/
-git add: "."
-git commit: %Q{ -m 'capistrano-rails' }
 
 # capistrano-rbenv
 uncomment_lines 'Capfile', /require.*rbenv/

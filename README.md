@@ -3,6 +3,8 @@
 **todos**
 
 * https://github.com/rubysherpas/paranoia/wiki/Testing-with-rspec
+* .bashrc 环境变量需要加在顶部
+* tmp/{pids, cache, sockets} 目录处理
 
 **使用 [RubyGems 镜像 - 淘宝网](https://ruby.taobao.org/)**
 

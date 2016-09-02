@@ -20,6 +20,7 @@ read app_name
 
 # user
 useradd -m -G sudo,staff -s /bin/bash $user_name
+echo "${user_name} ALL=NOPASSWD:ALL" >> /etc/sudoers
 su - $user_name  <<EOF
 bundle config mirror.https://rubygems.org https://gems.ruby-china.org
 mkdir ~/.ssh

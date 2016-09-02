@@ -1,5 +1,8 @@
 
 # Rails 项目初始化
+**todos**
+
+* https://github.com/rubysherpas/paranoia/wiki/Testing-with-rspec
 
 **使用 [RubyGems 镜像 - 淘宝网](https://ruby.taobao.org/)**
 

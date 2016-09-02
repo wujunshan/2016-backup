@@ -1,29 +1,43 @@
 #!/bin/bash
 
+# initialize
+rsa_pub_guxiaobai="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDiAP0QTzqGB4Mqhq+nyx\
+00grcmLNqDV8ttZnjd/D3yC1Km9speqrWejSOQlpOHfCIARUIiAKpfwjYlFHT1nZ9+5czRKqNljaT\
+5OKlF+RYyrrlxi9NcmjCzf0h5soAXcCpe1xUSDFaZjSvcTTJFXZyyo9GWRaexAan9jlpH4iZd7ty8\
+rsQX/vHFwujSnyrLbGyOiG7eldVZt7+HoCdJ12SsC2boTFlwy1hYlk0t25Kx3dU9BCupuVQ/nbavf\
+zZpbSx0vqCMqekqj1/r/zlVLRDrCzRau3bKInmsHT3JlMRjmLXC+HvxB2+1LKMINcbCKaWJ/DYD0W\
+81EjIuPM6thTUT sikuan.gu@gmail.com"
+
+
+echo -n "Please Enter Deploy User Name: "
+read user_name
+
 echo -n "Please Enter Application Name: "
 read app_name
 
-echo -n "Please Enter Deploy User(new): "
-read deploy_user
+# user
+useradd -m -G sudo,staff -s /bin/bash $user_name
+su - $user_name  <<EOF
+bundle config mirror.https://rubygems.org https://gems.ruby-china.org
+mkdir ~/.ssh
+echo ${rsa_pub_guxiaobai} >> ~/.ssh/authorized_keys
+echo "Rails Applicaton Configure"
+echo "export RAILS_ENV=production" | tee -a  ~/.profile
+echo "export SECRET_KEY_BASE=example" | tee -a  ~/.profile
+EOF
 
-deploy_path=/var/www/${app_name}
-ssh_home=/home/${deploy_user}/.ssh
+# app
+app_path=/var/www/$app_name
+mkdir -p $app_path
+chown -R $user_name:$user_name $app_path
 
-# User
-useradd -m -G staff -s /bin/bash ${deploy_user}
-passwd -l ${deploy_user}
-mkdir ${ssh_home}
-echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDiAP0QTzqGB4Mqhq+nyx00grcmLNqDV8ttZnjd/D3yC1Km9speqrWejSOQlpOHfCIARUIiAKpfwjYlFHT1nZ9+5czRKqNljaT5OKlF+RYyrrlxi9NcmjCzf0h5soAXcCpe1xUSDFaZjSvcTTJFXZyyo9GWRaexAan9jlpH4iZd7ty8rsQX/vHFwujSnyrLbGyOiG7eldVZt7+HoCdJ12SsC2boTFlwy1hYlk0t25Kx3dU9BCupuVQ/nbavfzZpbSx0vqCMqekqj1/r/zlVLRDrCzRau3bKInmsHT3JlMRjmLXC+HvxB2+1LKMINcbCKaWJ/DYD0W81EjIuPM6thTUT sikuan.gu@gmail.com" >> ${ssh_home}/authorized_keys
-echo "${deploy_user} ALL=NOPASSWD:ALL" >> /etc/sudoers
-chown -R ${deploy_user}:${deploy_user} ${ssh_home}
-chmod 700 ${ssh_home}
-chmod 600 ${ssh_home}/authorized_keys
-echo -e "\e[31;43;1m system user create success \e[0m "
+# Postgresql
+su - postgres <<EOF
+createuser  ${app_name} -s -P
+createdb -O ${app_name} ${app_name}_production -E UTF8 -e
+EOF
 
-# Directory
-mkdir -p ${deploy_path}
-chown -R ${deploy_user}:${deploy_user} ${deploy_path}
-echo -e "\e[31;43;1m deploy directory create success \e[0m "
+echo -e "\e[31;43;1m All Done. Have a nice day!   \e[0m "
 
 # Mysql
 # db_file=db_init.sql
@@ -37,16 +51,3 @@ echo -e "\e[31;43;1m deploy directory create success \e[0m "
 # rm ${db_file}
 
 # echo -e "\e[31;43;1m mysql user & database create success \e[0m "
-
-# Postgresql
-sudo -u postgres createuser  ${app_name} -s -P
-sudo -u postgres createdb -O ${app_name} ${app_name}_production
-# sudo -u postgres createdb -O ${app_name} ${app_name}_staging
-echo -e "\e[31;43;1m postgresql user & database create success \e[0m "
-
-
-# su - ${deploy_user} -c "npm config set registry http://registry.npm.taobao.org"
-# echo -e "\e[31;43;1m set npm mirror \e[0m "
-
-su - ${deploy_user} -c "bundle config mirror.https://rubygems.org https://gems.ruby-china.org"
-echo -e "\e[31;43;1m set gem mirror \e[0m "

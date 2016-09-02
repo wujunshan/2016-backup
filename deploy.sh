@@ -24,7 +24,7 @@ su - $user_name  <<EOF
 bundle config mirror.https://rubygems.org https://gems.ruby-china.org
 mkdir ~/.ssh
 echo ${rsa_pub_guxiaobai} >> ~/.ssh/authorized_keys
-echo "Rails Applicaton Configure" | tee -a  ~/.bashrc
+echo "# Rails Applicaton Configure" | tee -a  ~/.bashrc
 echo "export RAILS_ENV=production" | tee -a  ~/.bashrc
 echo "export SECRET_KEY_BASE=${secret_key}" | tee -a  ~/.bashrc
 EOF

@@ -52,3 +52,6 @@ end
 uncomment_lines 'config/deploy.rb', /ask\s:branch/
 uncomment_lines 'config/deploy.rb', /set\s:deploy_to/
 uncomment_lines 'config/deploy.rb', /set\s:linked_dirs/
+
+git add: "."
+git commit: %Q{ -m 'capistrano3-app' }

@@ -8,6 +8,9 @@ rsQX/vHFwujSnyrLbGyOiG7eldVZt7+HoCdJ12SsC2boTFlwy1hYlk0t25Kx3dU9BCupuVQ/nbavf\
 zZpbSx0vqCMqekqj1/r/zlVLRDrCzRau3bKInmsHT3JlMRjmLXC+HvxB2+1LKMINcbCKaWJ/DYD0W\
 81EjIuPM6thTUT sikuan.gu@gmail.com"
 
+secret_key="c6cf1a911977bd40ffef2a3cee6d062703e0322ef4885534694a50f9c704e2aefa\
+8af3c4ed4d4a1fe5900101895da6b54973c7f8490821ded451b28a5305e526"
+
 
 echo -n "Please Enter Deploy User Name: "
 read user_name
@@ -21,9 +24,9 @@ su - $user_name  <<EOF
 bundle config mirror.https://rubygems.org https://gems.ruby-china.org
 mkdir ~/.ssh
 echo ${rsa_pub_guxiaobai} >> ~/.ssh/authorized_keys
-echo "Rails Applicaton Configure"
-echo "export RAILS_ENV=production" | tee -a  ~/.profile
-echo "export SECRET_KEY_BASE=example" | tee -a  ~/.profile
+echo "Rails Applicaton Configure" | tee -a  ~/.bashrc
+echo "export RAILS_ENV=production" | tee -a  ~/.bashrc
+echo "export SECRET_KEY_BASE=${secret_key}" | tee -a  ~/.bashrc
 EOF
 
 # app

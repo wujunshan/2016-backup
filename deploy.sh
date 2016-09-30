@@ -19,7 +19,8 @@ echo -n "Please Enter Application Name: "
 read app_name
 
 # user
-useradd -m -G sudo,staff -s /bin/bash $user_name
+# TODO: TONGXIN_DATABASE_PASSWORD
+useradd -m -G sudo,adm -s /bin/bash $user_name
 echo "${user_name} ALL=NOPASSWD:ALL" >> /etc/sudoers
 su - $user_name  <<EOF
 bundle config mirror.https://rubygems.org https://gems.ruby-china.org
@@ -44,14 +45,12 @@ EOF
 echo -e "\e[31;43;1m All Done. Have a nice day!   \e[0m "
 
 # Mysql
-# db_file=db_init.sql
-# echo "CREATE DATABASE IF NOT EXISTS ${app_name}_production character set utf8;" >> ${db_file}
-# echo "CREATE DATABASE IF NOT EXISTS ${app_name}_staging character set utf8;" >> ${db_file}
-# echo "CREATE USER '${app_name}'@'127.0.0.1' IDENTIFIED BY PASSWORD '*288CAC5A9F4E53A9DCEA23A3EDCE42C695CF48B9';" >> ${db_file}
-# echo "GRANT ALL ON ${app_name}_production.* TO '${app_name}'@'127.0.0.1';" >> ${db_file}
-# echo "GRANT ALL ON ${app_name}_staging.* TO '${app_name}'@'127.0.0.1';" >> ${db_file}
-# echo "FLUSH PRIVILEGES;" >> ${db_file}
-# mysql -u root < ${db_file}
-# rm ${db_file}
+db_file=db_init.sql
+echo "CREATE DATABASE IF NOT EXISTS ${app_name}_production character set utf8;" >> ${db_file}
+echo "CREATE USER '${app_name}'@'127.0.0.1' IDENTIFIED BY PASSWORD '*288CAC5A9F4E53A9DCEA23A3EDCE42C695CF48B9';" >> ${db_file}
+echo "GRANT ALL ON ${app_name}_production.* TO '${app_name}'@'127.0.0.1';" >> ${db_file}
+echo "FLUSH PRIVILEGES;" >> ${db_file}
+mysql -u root < ${db_file}
+rm ${db_file}
 
-# echo -e "\e[31;43;1m mysql user & database create success \e[0m "
+echo -e "\e[31;43;1m mysql user & database create success \e[0m "

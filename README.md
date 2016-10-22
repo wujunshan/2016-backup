@@ -1,36 +1,11 @@
-
-# Rails 项目初始化
-**todos**
-
-* https://github.com/rubysherpas/paranoia/wiki/Testing-with-rspec
-* .bashrc 环境变量需要加在顶部
-* ~~tmp/{pids, cache, sockets} 目录处理(已处理)~~
-
-**使用 [RubyGems 镜像 - 淘宝网](https://ruby.taobao.org/)**
-
-	gem sources --add https://ruby.taobao.org/ --remove https://rubygems.org/
-	bundle config mirror.https://rubygems.org https://ruby.taobao.org
-	gem install rails -N
-	gem install foreman
+[rails-application-templates-real-world](https://www.sitepoint.com/rails-application-templates-real-world/)
 
 
-
-**新建项目**
-
-	rails new demo -T -d postgresql
-	rails db:create
-	rails db:migrate
-	git init
-	git add .
-	git commit -m "Initial Commit from $(rails -v)"
-
-
-**使用模板**
-
-	rails app:template LOCATION=
-
-
-
-### Gems
-
-* [seedbank](https://rubygems.org/gems/seedbank)
+	def source_paths
+	  Array(super) + 
+	    [File.expand_path(File.dirname(__FILE__))]
+	end
+	
+	
+	
+[源码](https://github.com/rails/rails/tree/bee9434cdf4f56dc51027a8890cf04f506544735/railties/lib/rails)	

@@ -12,7 +12,7 @@
 	bundle config mirror.https://rubygems.org https://ruby.taobao.org
 	gem install rails -N
 	gem install foreman
-	
+
 
 
 **新建项目**
@@ -21,12 +21,16 @@
 	rails db:create
 	rails db:migrate
 	git init
-	git add . 
+	git add .
 	git commit -m "Initial Commit from $(rails -v)"
-	
-	
+
+
 **使用模板**
 
 	rails app:template LOCATION=
-	
-	
+
+
+
+### Gems
+
+* [seedbank](https://rubygems.org/gems/seedbank)
